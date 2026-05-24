@@ -10,11 +10,12 @@
 | [核心理念](#核心理念)                 | 又快又好的标准               |
 | [标准工作流（速览）](#标准工作流速览) | 6 步流程一句话版             |
 | [验收必查清单](#验收必查清单)         | Step 5 功能 5 项 + 体验 5 项 |
-| [Prompt 模板](#prompt-模板)           | 7 类场景可复制模板           |
+| [Prompt 模板](#prompt-模板)           | 8 类场景可复制模板（含需求拆解） |
+| [0. 需求拆解](#0-需求拆解模板)        | 原始需求 → 类 README 分析（Phase 3 用） |
 | [UI/UX 与 AI 协作](#uiux-与-ai-协作)  | 设计资产、三阶段流程、UI Prompt |
 | [约束 FAQ](#约束-faq)                 | 白名单/黑名单、拆步粒度、保留边界、Prompt 不重复堆砌 |
 | [个人约束清单](#个人约束清单)         | 复盘后沉淀的约束（自行维护） |
-| [Agent 协作](#agent-协作三角色)       | STATUS 同步、三角色分工、更新权限 |
+| [Agent 协作](#agent-协作四角色)       | STATUS 同步、四角色分工、更新权限 |
 
 ---
 
@@ -72,7 +73,46 @@
 
 复制对应模板，改 3 处即可发出：**需求片段**、**本次只做**、**文件路径 / 验收标准**。
 
-### 1. 读需求分析（Step 1）
+### 0. 需求拆解模板
+
+> **角色**：需求拆解 Agent（`requirements-analyst.mdc`）  
+> **用途**：原始 PRD / 面试题 → 结构化分析（类似 practice `README.md`）  
+> **Phase 3**：模拟面试前 5～8 分钟专用；**不写 Prompt、不写代码**
+
+```markdown
+@src/AI_coding/STATUS.md
+@.cursor/rules/requirements-analyst.mdc
+
+角色：需求拆解
+
+## 原始需求
+
+【粘贴需求全文】
+
+## 请你输出（对齐 practice README 结构）
+
+1. **需求摘要**（一句话）
+2. **必须做** / **不做**
+3. **不明确（我的假设）** — 列出 3～5 条合理假设供我确认
+4. **涉及文件** — 页面 / 组件 / 路由 / store（新建 vs 修改）
+5. **数据边界** — 字段结构、持久化、鉴权等
+6. **建议 Prompt 拆步** — 1～3 步，每步：做什么 + 验收（可观察）
+7. **验收清单** — 6～10 条 checkbox
+8. **与现有代码衔接** — 基于 STATUS / 当前仓库，哪些可复用
+
+## 约束
+
+- 只输出分析，不写代码，不写 prompt.md
+- 不代替我做最终优先级决策；冲突处列出选项
+```
+
+**用户后续**：把第 2～7 节改写成你的 `prompt.md`（或先存 `practice N/analysis.md` 再写 Prompt）。
+
+---
+
+### 1. 读需求分析（Step 1 · 轻量版）
+
+> 极短需求可用本模板；**长 PRD / 模拟面试优先用 §0 需求拆解**。
 
 ```markdown
 ## 背景
@@ -566,16 +606,25 @@ Vue 3 + Vite 项目，使用 Composition API、Pinia、Vue Router
 
 ---
 
-## Agent 协作（三角色）
+## Agent 协作（四角色）
 
 > 状态单一来源：[`src/AI_coding/STATUS.md`](./src/AI_coding/STATUS.md)  
 > Cursor 规则：[`.cursor/rules/`](./.cursor/rules/)
 
 | 角色 | 规则文件 | 做什么 | 能否写 STATUS |
 |------|----------|--------|:-------------:|
-| **教练** | `coach.mdc` | 带练、拆需求、复盘 | ✅ |
+| **教练** | `coach.mdc` | 带练、给骨架、复盘 | ✅ |
+| **需求拆解** | `requirements-analyst.mdc` | 原始需求 → 类 README 分析 | ❌ |
 | **Prompt 审** | `prompt-reviewer.mdc` | 只点评 Prompt | ❌ |
 | **实现** | `implementer.mdc` | 按定稿 Prompt 写代码 | ❌ |
+
+**标准流水线**：
+
+```
+原始需求 → [需求拆解] → 你写 prompt → [Prompt审] → 定稿 → [实现] → 验收 → [教练复盘]
+```
+
+**Phase 3 模拟面试**：用**需求拆解**代替教练 Step 1；限时内不问教练。
 
 **换 Agent 前**：更新或确认 STATUS → 新对话 `@STATUS.md` + [交接模板](./src/AI_coding/STATUS.md#agent-交接模板复制到新对话)
 
@@ -583,4 +632,4 @@ Vue 3 + Vite 项目，使用 Composition API、Pinia、Vue Router
 
 ---
 
-_文档版本：v1.4 · 与 [`AI-coding-学习路线.md`](./AI-coding-学习路线.md) 配套使用_
+_文档版本：v1.5 · 四 Agent 协作 · 与 [`AI-coding-学习路线.md`](./AI-coding-学习路线.md) 配套使用_

@@ -17,6 +17,7 @@ alwaysApply: false
 
 - 在用户未要求、Prompt 未定稿时，不要直接大改 `src/**` 业务代码
 - 不要代替 Prompt 审阅 Agent 做完整 Prompt 点评（可简要引导，详审交给审阅角色）
+- **Phase 3 模拟面试中途**：不拆需求、不写 Prompt、不救场；需求结构化交给 **需求拆解 Agent**（`requirements-analyst.mdc`）
 
 ## 完成后
 

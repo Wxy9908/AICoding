@@ -9,41 +9,39 @@
 
 | 项 | 值 |
 |----|-----|
-| Phase | **Phase 2 半独立期** |
-| 练习 | 练习 4 ✅ 已验收 · 复盘 [`practice 4/review.md`](./practice%204/review.md) |
-| 上次完成 | 练习 4 — Mock 登录 + user store + 路由守卫（2026-05-22） |
-| 当前 Agent 建议 | **教练** — 练 5 骨架；或 **你** — 写 `practice 5/prompt.md` |
+| Phase | **Phase 2 半独立期**（练 4–5 已完成，可 **Phase 2 通关自评** 或进 Phase 3） |
+| 练习 | 练习 5 ✅ 已验收 · 复盘 [`practice 5/review.md`](./practice%205/review.md) |
+| 上次完成 | 练习 5 — Todo localStorage 持久化（2026-05-22） |
+| 当前 Agent 建议 | **教练** — Phase 2 通关自评；或启动 **练习 6** 模拟面试 |
 
 ---
 
 ## 代码现状（简要）
 
-- **鉴权**：`stores/user.js`；`/login`；`AppHeader` 退出；`App.vue` header 白名单
-- **守卫**：`/todos` `requiresAuth`；`beforeEach` 读 `isLoggedIn`；`/home` `/about` 公开
-- **Todo**：`stores/todos.js` + `TodoList`（练 3 功能完整）
-- **路由**：`/` → `/login`；`/home` `/about` `/login` `/todos`
-- **未做（练 5）**：Todo **localStorage** 持久化
+- **鉴权**：user store（内存）+ `/todos` 守卫
+- **Todo**：`stores/todos.js` — Pinia + 筛选 + 增删完成 + **`app-todos` localStorage**
+- **hydration**：启动 `loadTodosFromStorage()`；action 后 `persistTodos()`
+- **filter**：不持久化，刷新回 `all`
 
 ---
 
-## 本步任务（练习 5 占位）
+## 本步任务（Phase 2 通关 / 练习 6 占位）
 
 | 项 | 值 |
 |----|-----|
-| 目标 | Todo 列表 localStorage 持久化，刷新不丢失 |
-| 预计 Prompt 数 | **1**（你主导） |
-| 涉及文件（预估） | `stores/todos.js`；可能抽 `utils/storage` |
-| prompt 路径 | `src/AI_coding/practice 5/prompt.md`（待建） |
+| 选项 A | **Phase 2 通关自评**（练 4–5 复盘 + 45min 目标回顾） |
+| 选项 B | **练习 6** — Phase 3 限时模拟面试（完整需求 + 45–60min 独立） |
+| prompt 路径 | `src/AI_coding/practice 6/`（待建） |
 | prompt_status | `未开始` |
 
 ---
 
-## 有效约束（Prompt 必引用）
+## 有效约束（来自复盘，Prompt 必引用）
 
-- todo `{ id, title, done }`；user 练 4 已定（练 5 登录持久化可选，默认仍内存）
-- 复用 design tokens / `components.css`
-- Prompt：**需求 → 数据边界 → 文件 → 约束与范围 → 验收**
-- 默认 1 个功能 Prompt
+- todo `{ id, title, done }`；持久化 key `app-todos`
+- user 登录默认仍内存（除非需求另定）
+- Prompt 顺序：**需求 → 数据边界 → 文件 → 约束与范围 → 验收**
+- 默认 1 个功能 Prompt；样式约束可合并
 
 ---
 
@@ -72,12 +70,12 @@
 ```markdown
 @src/AI_coding/STATUS.md
 
-角色：[教练 / Prompt审 / 实现]
+角色：[教练 / 需求拆解 / Prompt审 / 实现]
 本步任务：（一句话）
 定稿 Prompt：（路径，或「无」）
-请只做：（带练 / 审Prompt / 写代码）
+请只做：（带练 / 拆需求 / 审Prompt / 写代码）
 ```
 
 ---
 
-*最后更新：练习 4 用户验收 + 理解验收通过 · 复盘 review.md*
+*最后更新：练习 5 用户验收通过 · review.md 已写*

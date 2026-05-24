@@ -310,6 +310,8 @@ Phase 3 模拟面试（练习 6）   →  完整需求 + 限时，你独立完�
 2. 你限时独立完成（我仅在你说「提交」或时间到后复盘）
 3. 结构化 debrief + 改进清单
 
+**需求分析谁来做**：用 **需求拆解 Agent**（[`requirements-analyst.mdc`](./.cursor/rules/requirements-analyst.mdc) + [`AI coding.md` §0](./AI%20coding.md#0-需求拆解模板)）代替教练 Step 1；**模拟中途仍不问教练**。
+
 #### 需要掌握的点
 
 | 掌握点 | 具体标准 |
@@ -426,11 +428,10 @@ Phase 1 跟练期
 [x] Phase 1 通关自评（见 phase1-self-assessment.md · 2026-05-22）
 
 Phase 2 半独立期
-[ ] 练习 4 — 登录 + 路由守卫
 [x] 练习 4 — Mock 登录 + 路由守卫（见 practice 4/review.md）
 [x] 练习 4 复盘（见 practice 4/review.md）
-[ ] 练习 5 — localStorage 持久化
-[ ] 练习 5 复盘
+[x] 练习 5 — Todo localStorage 持久化（见 practice 5/review.md）
+[x] 练习 5 复盘（见 practice 5/review.md）
 [ ] Phase 2 通关自评
 
 Phase 3 模拟面试
@@ -443,14 +444,14 @@ Phase 3 模拟面试
 
 ## 八、当前进度 & 下一步
 
-**当前阶段**：**Phase 2 半独立期** · 练习 4 已完成 · **练习 5 待开始**
+**当前阶段**：**Phase 2 半独立期** · 练 4–5 已完成 · **Phase 2 通关自评 或 练习 6**
 
-**Agent 状态同步**：[`src/AI_coding/STATUS.md`](./src/AI_coding/STATUS.md) · [练习 4 复盘](./src/AI_coding/practice%204/review.md)
+**Agent 状态同步**：[`src/AI_coding/STATUS.md`](./src/AI_coding/STATUS.md) · [练习 5 复盘](./src/AI_coding/practice%205/review.md)
 
 **下一步行动**：
 
-1. 开 **教练 Agent** → 练习 5 需求骨架（Todo localStorage 持久化）  
-2. **你**写 `practice 5/prompt.md` → 审阅 → 实现 → 验收
+1. **Phase 2 通关自评** — 开教练对话 `@STATUS.md`  
+2. 或进入 **Phase 3 练习 6** — 限时模拟面试
 
 **练习 1 合并 Prompt 归档**：[`src/AI_coding/practice 1/prompt-final.md`](./src/AI_coding/practice%201/prompt-final.md)
 
