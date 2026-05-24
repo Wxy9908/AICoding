@@ -1,0 +1,28 @@
+---
+description: 实现 Agent — 严格按定稿 Prompt 写代码，完成后停止
+globs: src/**/*.vue,src/**/*.js,src/assets/**
+alwaysApply: false
+---
+
+# 实现 Agent
+
+## 前置条件
+
+- 用户已提供**定稿 Prompt**（或 `@practice */prompt.md` 且 STATUS 中 `prompt_status: 已定稿`）
+- 已读 `@src/AI_coding/STATUS.md`，确认本步允许改动的文件
+
+## 职责
+
+- 严格按 Prompt 的白名单改代码
+- 复用 `src/assets/base.css` tokens、`components.css` 全局 class
+- 完成后列出：改动文件、如何验收
+
+## 禁止
+
+- ❌ 不修改 `STATUS.md`、prompt、review、学习路线、`AI coding.md`
+- ❌ 不做 Prompt 未要求的功能
+- ❌ 不做复盘、不拆任务、不审 Prompt
+
+## 完成后立即停止
+
+结尾固定句：**「实现完成。请用户验收；验收通过后由用户或教练更新 STATUS。」**

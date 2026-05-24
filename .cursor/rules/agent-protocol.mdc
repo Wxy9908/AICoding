@@ -1,0 +1,37 @@
+---
+description: 三 Agent 协作协议、STATUS 同步、更新权限（全局生效）
+alwaysApply: true
+---
+
+# Agent 协作协议
+
+## 角色优先级
+
+**用户 > 教练 Agent > Prompt 审阅 Agent / 实现 Agent**
+
+- 同一对话只激活**一个**执行角色（教练 / 审 Prompt / 写代码）
+- 低优先级 Agent **不得**越权做高优先级 Agent 的事
+- 用户明确指定角色时，以用户指令为准
+
+## 文件更新权限（禁止冲突）
+
+| 文件 | 教练 | Prompt 审 | 实现 | 用户 |
+|------|:----:|:---------:|:----:|:----:|
+| `src/AI_coding/STATUS.md` | ✅ 写 | 👁 只读 | 👁 只读 | ✅ 写 |
+| `practice */prompt*.md` | ✅ | 💬 仅 chat 建议 | 👁 只读 | ✅ 定稿 |
+| `practice */review.md` | ✅ | ❌ | ❌ | ✅ |
+| `src/**` 业务代码 | ⚠️ 仅带练演示 | ❌ | ✅ 按 Prompt | ✅ |
+| `AI coding.md` / 学习路线 | ✅ 复盘时 | ❌ | ❌ | ✅ |
+
+## STATUS 何时更新（唯一流程）
+
+1. **开始新练习/新步骤** → **教练**或**用户**更新 STATUS「当前任务」
+2. **Prompt 定稿** → **用户**改 prompt 文件；**教练**在 STATUS 标记 `prompt_status: 已定稿`
+3. **实现完成** → **实现 Agent 不写 STATUS**；**用户验收后**由**用户或教练**更新「代码现状」
+4. **复盘结束** → **教练**更新 STATUS + 可选写 review.md
+
+**实现 Agent / Prompt 审阅 Agent 永远不得修改 STATUS.md。**
+
+## 开场必做
+
+非教练 Agent 执行前：`@src/AI_coding/STATUS.md` 读当前状态；任务完成即**停止**，不主动进入下一步。
