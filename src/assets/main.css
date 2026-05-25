@@ -1,29 +1,21 @@
 @import './base.css';
-@import './components.css';
 
 #app {
-  max-width: 1280px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 1.5rem;
   font-weight: normal;
+  width: 100%;
 }
 
-a,
-.green {
+a {
   text-decoration: none;
-  color: var(--color-primary);
-  transition: 0.4s;
-  padding: 3px;
+  color: var(--color-heading);
+  transition: 0.3s;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
-  }
-}
-
-@media (min-width: 1024px) {
-  #app {
-    padding: 0 2rem;
+    color: var(--color-border-hover);
   }
 }

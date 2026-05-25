@@ -5,13 +5,21 @@ alwaysApply: true
 
 # Agent 协作协议
 
+## 项目配置
+
+| 项 | 路径 |
+|----|------|
+| 状态文件 | `src/AI_coding/STATUS.md` |
+| 任务目录 | `src/AI_coding` |
+| 业务代码 | `src/**` |
+
 ## 角色与优先级
 
 **用户 > 需求拆解 / Prompt 审阅 / 实现**
 
 | 角色 | 核心产出 | 写 STATUS |
 |------|----------|:---------:|
-| 需求拆解 | 结构化分析 + **维护 STATUS** | ✅ |
+| 需求拆解 | 结构化分析 + 维护 STATUS | ✅ |
 | Prompt 审 | 通过 / 需改清单 | ❌ |
 | 实现 | 按 Prompt 改代码 | ❌ |
 | **用户** | 定稿 Prompt、验收、复盘 | ✅ |
@@ -23,7 +31,7 @@ alwaysApply: true
 
 ```text
 原始需求 / REQUIREMENTS
-  → [需求拆解]（读/建/更新 STATUS + 输出分析）
+  → [需求拆解]（读/建/更新 STATUS + 输出 analysis）
   → 用户写 prompt.md
   → [Prompt 审]
   → 用户定稿 + prompt_status: 已定稿
@@ -35,42 +43,32 @@ alwaysApply: true
 **硬规则**
 
 1. 实现 Agent：**不得**在 `prompt_status ≠ 已定稿` 时改业务代码
-2. **不得**把整份 REQUIREMENTS/README 一次丢给实现（须用户压缩为 Prompt）
-3. 限时/模拟：**中途不切换 Agent 角色**；Step 1 用需求拆解 Agent
+2. **不得**把整份 REQUIREMENTS/README 一次丢给实现
+3. 需求拆解 **不得**将 `prompt_status` 设为 **已定稿**
 
-## 文件权限（本项目）
+## 文件权限
 
 | 文件 | 需求拆解 | Prompt审 | 实现 | 用户 |
 |------|:--------:|:--------:|:----:|:----:|
 | `src/AI_coding/STATUS.md` | ✅ | 👁 | 👁 | ✅ |
-| `practice */REQUIREMENTS.md` | 👁 | 👁 | 👁 | ✅ |
-| `practice */analysis.md` | ✅ | 👁 | 👁 | ✅ |
-| `practice */prompt*.md` | ❌ | 💬 | 👁 | ✅ 定稿 |
-| `practice */review.md` | ❌ | ❌ | ❌ | ✅ |
+| `src/AI_coding/iteration-*/REQUIREMENTS.md` | 👁 | 👁 | 👁 | ✅ |
+| `src/AI_coding/iteration-*/analysis.md` | ✅ | 👁 | 👁 | ✅ |
+| `src/AI_coding/iteration-*/prompt*.md` | ❌ | 💬 | 👁 | ✅ 定稿 |
+| `src/AI_coding/iteration-*/review.md` | ❌ | ❌ | ❌ | ✅ |
 | `src/**` 业务代码 | ❌ | ❌ | ✅ | ✅ |
-| `AI coding.md` / 学习路线 | ❌ | ❌ | ❌ | ✅ |
 
 ## STATUS 更新
 
 | 事件 | 谁更新 |
 |------|--------|
-| STATUS 不存在 | **需求拆解** 从模板初始化（或用户） |
-| 新任务 / 拆解完成 | **需求拆解** → 本步任务、当前 Agent 建议、`analysis.md` |
+| STATUS 不存在 | **需求拆解** 从 `docs/agent/STATUS.template.md` 初始化（或用户） |
+| 新任务 / 拆解完成 | **需求拆解** → 本步任务、当前 Agent 建议、analysis |
 | Prompt 定稿 | **用户** → `prompt_status: 已定稿` |
 | 实现交差 | **不写**（实现 Agent） |
 | 验收通过 | **用户** → 代码现状、上次完成 |
 | 复盘 | **用户** → review |
 
-**需求拆解不得**将 `prompt_status` 设为 **已定稿**。  
 **Prompt 审 / 实现 永远不得修改 STATUS。**
-
-## Prompt 规范
-
-推荐章节顺序：
-
-```text
-背景 → 需求 → 数据边界 → 相关文件 → 保留 → 约束与范围 → 验收标准
-```
 
 ## 各 Agent 开场 / 收尾
 
@@ -82,10 +80,9 @@ alwaysApply: true
 
 ## 开场
 
-各 Agent：读 `@src/AI_coding/STATUS.md`（需求拆解：不存在则初始化）→ 执行 → **停止**。
+各 Agent：读 `@src/AI_coding/STATUS.md`（需求拆解：不存在则从模板初始化）→ 执行 → **停止**。
 
 ## 引用
 
 - 状态：`@src/AI_coding/STATUS.md`
-- 速查：`@AI coding.md`
-- 通用模板：`agent-workflow-template/`
+- 模板：`docs/agent/`

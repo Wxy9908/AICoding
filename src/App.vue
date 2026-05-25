@@ -1,36 +1,13 @@
 <script setup>
-import { computed } from 'vue'
-import { RouterView, useRoute } from 'vue-router'
-import AppHeader from './layout/AppHeader.vue'
+import { RouterView } from 'vue-router'
 
-defineOptions({
-  name: 'App',
-})
-
-const route = useRoute()
-
-const LAYOUT_HEADER_HIDDEN_PATHS = ['/login']
-
-const showLayoutHeader = computed(
-  () => !LAYOUT_HEADER_HIDDEN_PATHS.includes(route.path),
-)
+defineOptions({ name: 'App' })
 </script>
 
 <template>
-  <div class="app-layout">
-    <AppHeader v-if="showLayoutHeader" />
-    <main class="app-main">
-      <RouterView />
-    </main>
-  </div>
+  <RouterView />
 </template>
 
 <style scoped>
-.app-layout {
-  min-height: 100vh;
-}
-
-.app-main {
-  padding: 1.5rem;
-}
+/* 简洁后台壳：内容由各页面自行布局 */
 </style>

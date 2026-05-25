@@ -10,21 +10,21 @@ alwaysApply: false
 
 1. `@src/AI_coding/STATUS.md` 中 `prompt_status: **已定稿**`
 2. 用户 `@` 定稿 `prompt*.md`
-3. 确认 Prompt **文件白名单**与 STATUS 不冲突
+3. Prompt **文件白名单**与 STATUS 不冲突
 
 未定稿 → **拒绝改代码**，提示用户先审 Prompt 并定稿。
 
 ## 职责
 
-- **严格**按 Prompt 白名单改动
-- 复用项目既有约定（本项目：`base.css` tokens、`components.css` 全局 class）
-- 业务逻辑变更走既有分层（如 store → api，不绕开）
-- 完成后输出：**改动文件列表** + **验收步骤**
+- **严格**按 Prompt 白名单改动 `src/**`
+- 复用项目约定：`src/assets/base.css` 语义变量 + `main.css`
+- 业务逻辑走既有分层（store → api，不绕开）
+- 输出：**改动文件列表** + **验收步骤**
 
 ## 禁止
 
-- ❌ 不改 STATUS、prompt、review、学习路线、`AI coding.md`
-- ❌ 不做 Prompt 未要求的功能（含「顺手优化」）
+- ❌ 不改 STATUS、prompt、review
+- ❌ 不做 Prompt 未要求的功能
 - ❌ 不拆需求、不审 Prompt、不复盘
 - ❌ 不新增 Prompt 未允许的依赖
 

@@ -34,40 +34,6 @@
   --color-text: var(--vt-c-text-light-1);
 
   --section-gap: 160px;
-
-  /* System colors */
-  --color-primary: hsl(160, 100%, 37%);
-  --color-primary-hover: hsl(160, 100%, 32%);
-  --color-primary-text: #ffffff;
-
-  --color-danger: hsl(0, 65%, 45%);
-  --color-danger-bg: hsl(0, 70%, 96%);
-  --color-danger-bg-hover: hsl(0, 70%, 92%);
-  --color-danger-border: hsl(0, 60%, 85%);
-
-  --color-success: hsl(160, 100%, 28%);
-  --color-success-bg: hsl(160, 60%, 94%);
-
-  --color-warning: hsl(35, 90%, 38%);
-  --color-warning-bg: hsl(35, 90%, 94%);
-
-  /* Button tokens */
-  --btn-height: 2rem;
-  --btn-padding-x: 1.25rem;
-  --btn-padding-y: 0.35rem;
-  --btn-min-width: 4.5rem;
-  --btn-radius: 4px;
-  --btn-font-size: 0.875rem;
-
-  /* Input tokens */
-  --input-height: var(--btn-height);
-  --input-padding-x: 0.875rem;
-  --input-radius: 6px;
-  --input-font-size: 0.875rem;
-  --color-input-bg: var(--color-background-soft);
-  --color-input-border: var(--color-border);
-  --color-input-placeholder: rgba(60, 60, 60, 0.45);
-  --color-input-focus-ring: color-mix(in srgb, var(--color-primary) 22%, transparent);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -81,26 +47,6 @@
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);
-
-    --color-primary: hsl(160, 60%, 45%);
-    --color-primary-hover: hsl(160, 60%, 40%);
-    --color-primary-text: #ffffff;
-
-    --color-danger: hsl(0, 70%, 65%);
-    --color-danger-bg: hsl(0, 40%, 18%);
-    --color-danger-bg-hover: hsl(0, 40%, 22%);
-    --color-danger-border: hsl(0, 35%, 30%);
-
-    --color-success: hsl(160, 55%, 65%);
-    --color-success-bg: hsl(160, 30%, 18%);
-
-    --color-warning: hsl(35, 80%, 65%);
-    --color-warning-bg: hsl(35, 40%, 18%);
-
-    --color-input-bg: var(--color-background-mute);
-    --color-input-border: var(--color-border);
-    --color-input-placeholder: rgba(235, 235, 235, 0.45);
-    --color-input-focus-ring: color-mix(in srgb, var(--color-primary) 30%, transparent);
   }
 }
 
