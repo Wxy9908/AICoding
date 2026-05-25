@@ -1,49 +1,91 @@
 ---
-description: 四 Agent 协作协议、STATUS 同步、更新权限（全局生效）
+description: 三角色 Agent 协作协议、STATUS 同步、流水线（全局生效）
 alwaysApply: true
 ---
 
 # Agent 协作协议
 
-## 角色优先级
+## 角色与优先级
 
-**用户 > 教练 Agent > 需求拆解 / Prompt 审阅 / 实现 Agent**
+**用户 > 需求拆解 / Prompt 审阅 / 实现**
 
-- 同一对话只激活**一个**执行角色（教练 / 需求拆解 / 审 Prompt / 写代码）
-- 低优先级 Agent **不得**越权做高优先级 Agent 的事
+| 角色 | 核心产出 | 写 STATUS |
+|------|----------|:---------:|
+| 需求拆解 | 结构化分析 + **维护 STATUS** | ✅ |
+| Prompt 审 | 通过 / 需改清单 | ❌ |
+| 实现 | 按 Prompt 改代码 | ❌ |
+| **用户** | 定稿 Prompt、验收、复盘 | ✅ |
+
+- 同一对话只激活**一个** Agent 角色
 - 用户明确指定角色时，以用户指令为准
-
-## 文件更新权限（禁止冲突）
-
-| 文件 | 教练 | 需求拆解 | Prompt 审 | 实现 | 用户 |
-|------|:----:|:--------:|:---------:|:----:|:----:|
-| `src/AI_coding/STATUS.md` | ✅ 写 | 👁 只读 | 👁 只读 | 👁 只读 | ✅ 写 |
-| `practice */analysis.md` | ✅ | 💬 建议 | 👁 | 👁 | ✅ 定稿 |
-| `practice */prompt*.md` | ✅ | ❌ | 💬 仅 chat 建议 | 👁 只读 | ✅ 定稿 |
-| `practice */review.md` | ✅ | ❌ | ❌ | ❌ | ✅ |
-| `src/**` 业务代码 | ⚠️ 仅带练演示 | ❌ | ❌ | ✅ 按 Prompt | ✅ |
-| `AI coding.md` / 学习路线 | ✅ 复盘时 | ❌ | ❌ | ❌ | ✅ |
 
 ## 标准流水线
 
+```text
+原始需求 / REQUIREMENTS
+  → [需求拆解]（读/建/更新 STATUS + 输出分析）
+  → 用户写 prompt.md
+  → [Prompt 审]
+  → 用户定稿 + prompt_status: 已定稿
+  → [实现]
+  → 用户验收
+  → 用户更新 STATUS 代码现状 / review
 ```
-原始需求 → [需求拆解] → 你写 prompt.md → [Prompt 审] → 定稿 → [实现] → 验收 → [教练复盘]
+
+**硬规则**
+
+1. 实现 Agent：**不得**在 `prompt_status ≠ 已定稿` 时改业务代码
+2. **不得**把整份 REQUIREMENTS/README 一次丢给实现（须用户压缩为 Prompt）
+3. 限时/模拟：**中途不切换 Agent 角色**；Step 1 用需求拆解 Agent
+
+## 文件权限（本项目）
+
+| 文件 | 需求拆解 | Prompt审 | 实现 | 用户 |
+|------|:--------:|:--------:|:----:|:----:|
+| `src/AI_coding/STATUS.md` | ✅ | 👁 | 👁 | ✅ |
+| `practice */REQUIREMENTS.md` | 👁 | 👁 | 👁 | ✅ |
+| `practice */analysis.md` | ✅ | 👁 | 👁 | ✅ |
+| `practice */prompt*.md` | ❌ | 💬 | 👁 | ✅ 定稿 |
+| `practice */review.md` | ❌ | ❌ | ❌ | ✅ |
+| `src/**` 业务代码 | ❌ | ❌ | ✅ | ✅ |
+| `AI coding.md` / 学习路线 | ❌ | ❌ | ❌ | ✅ |
+
+## STATUS 更新
+
+| 事件 | 谁更新 |
+|------|--------|
+| STATUS 不存在 | **需求拆解** 从模板初始化（或用户） |
+| 新任务 / 拆解完成 | **需求拆解** → 本步任务、当前 Agent 建议、`analysis.md` |
+| Prompt 定稿 | **用户** → `prompt_status: 已定稿` |
+| 实现交差 | **不写**（实现 Agent） |
+| 验收通过 | **用户** → 代码现状、上次完成 |
+| 复盘 | **用户** → review |
+
+**需求拆解不得**将 `prompt_status` 设为 **已定稿**。  
+**Prompt 审 / 实现 永远不得修改 STATUS。**
+
+## Prompt 规范
+
+推荐章节顺序：
+
+```text
+背景 → 需求 → 数据边界 → 相关文件 → 保留 → 约束与范围 → 验收标准
 ```
 
-- **Phase 1–2 跟练/半独立**：教练可代替需求拆解给 README 骨架
-- **Phase 3 模拟面试**：用**需求拆解 Agent** 代替教练 Step 1；中途不问教练
+## 各 Agent 开场 / 收尾
 
-## STATUS 何时更新（唯一流程）
+| 角色 | 开场 | 收尾固定句 |
+|------|------|------------|
+| 需求拆解 | 读/建 `@src/AI_coding/STATUS.md` + 原始需求 | 「需求拆解完成。已更新 STATUS…请自行撰写 Prompt…」 |
+| Prompt 审 | 读 STATUS + prompt | 「Prompt 审阅完成。请用户定稿后…」 |
+| 实现 | 读 STATUS + **已定稿** prompt | 「实现完成。请用户验收…」 |
 
-1. **开始新练习/新步骤** → **教练**或**用户**更新 STATUS「当前任务」
-2. **Prompt 定稿** → **用户**改 prompt 文件；**教练**或**用户**标记 `prompt_status: 已定稿`
-3. **实现 Agent 交差** → **实现 Agent 不写** STATUS
-4. **用户验收通过** → **用户**或**教练**更新「代码现状」
-5. **练习复盘结束** → **教练**更新 STATUS + 可选写 `review.md`
+## 开场
 
-**需求拆解 / Prompt 审阅 / 实现 Agent 永远不得修改 STATUS.md。**
+各 Agent：读 `@src/AI_coding/STATUS.md`（需求拆解：不存在则初始化）→ 执行 → **停止**。
 
-## 开场必做
+## 引用
 
-- **教练**：读 `@src/AI_coding/STATUS.md`，带练或复盘后更新 STATUS
-- **需求拆解 / Prompt 审 / 实现**：读 STATUS 了解范围；**任务完成即停止**，不主动进入下一步
+- 状态：`@src/AI_coding/STATUS.md`
+- 速查：`@AI coding.md`
+- 通用模板：`agent-workflow-template/`

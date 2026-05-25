@@ -9,7 +9,7 @@ defineOptions({
 
 const router = useRouter()
 const userStore = useUserStore()
-const { isLoggedIn } = storeToRefs(userStore)
+const { isLoggedIn, currentUser } = storeToRefs(userStore)
 
 const handleLogout = () => {
   userStore.logout()
@@ -25,6 +25,9 @@ const handleLogout = () => {
       <RouterLink to="/todos">Todos</RouterLink>
     </nav>
     <div class="app-header__actions">
+      <span v-if="isLoggedIn && currentUser" class="app-header__username">
+        {{ currentUser.username }}，您好！
+      </span>
       <button
         v-if="isLoggedIn"
         type="button"
@@ -82,6 +85,13 @@ const handleLogout = () => {
 .app-header__actions {
   display: flex;
   align-items: center;
+  gap: 0.75rem;
   flex-shrink: 0;
+}
+
+.app-header__username {
+  font-size: 0.875rem;
+  color: var(--color-text);
+  white-space: nowrap;
 }
 </style>

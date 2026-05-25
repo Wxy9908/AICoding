@@ -435,23 +435,23 @@ Phase 2 半独立期
 [ ] Phase 2 通关自评
 
 Phase 3 模拟面试
-[ ] 练习 6 — 限时独立完成
-[ ] 练习 6 复盘
+[x] 练习 6 — 待办 v1.1 限时模拟（35 min · 见 practice 6/review.md）
+[x] 练习 6 复盘（见 practice 6/review.md）
 [ ] 最终通关：完全掌握 AI Coding
+
+Phase 3+ 加练（可选）
+[x] 加练 1 / 练习 7 — Mock 接口层（见 practice 7/review.md）
+[x] 加练 1 复盘（见 practice 7/review.md）
+[ ] 加练 2 — 新域页面（题 B 表格，待开）
 ```
 
 ---
 
 ## 八、当前进度 & 下一步
 
-**当前阶段**：**Phase 2 半独立期** · 练 4–5 已完成 · **Phase 2 通关自评 或 练习 6**
+**当前阶段**：练习 7 加练 1 ✅ · 可选 **加练 2** 或 **最终通关自评**
 
-**Agent 状态同步**：[`src/AI_coding/STATUS.md`](./src/AI_coding/STATUS.md) · [练习 5 复盘](./src/AI_coding/practice%205/review.md)
-
-**下一步行动**：
-
-1. **Phase 2 通关自评** — 开教练对话 `@STATUS.md`  
-2. 或进入 **Phase 3 练习 6** — 限时模拟面试
+**复盘**：[`practice 7/review.md`](./src/AI_coding/practice%207/review.md) · [`STATUS.md`](./src/AI_coding/STATUS.md)
 
 **练习 1 合并 Prompt 归档**：[`src/AI_coding/practice 1/prompt-final.md`](./src/AI_coding/practice%201/prompt-final.md)
 

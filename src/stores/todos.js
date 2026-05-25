@@ -1,56 +1,15 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import * as todosApi from '../api/todosApi'
 
-const STORAGE_KEY = 'app-todos'
-
-const INITIAL_TODOS = [
-  { id: 1, title: '学习 Vue 3 基础', done: true },
-  { id: 2, title: '完成 Todo 列表页面', done: false },
-  { id: 3, title: '准备 AI Coding 面试', done: false },
-]
-
-const isValidTodo = (item) => {
-  return (
-    item &&
-    typeof item === 'object' &&
-    typeof item.id === 'number' &&
-    typeof item.title === 'string' &&
-    typeof item.done === 'boolean'
-  )
-}
-
-const isValidTodos = (items) => {
-  return Array.isArray(items) && items.length > 0 && items.every(isValidTodo)
-}
-
-// 启动时从 localStorage 恢复；无数据或非法数据则回退 INITIAL_TODOS
-const loadTodosFromStorage = () => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) {
-      return [...INITIAL_TODOS]
-    }
-
-    const parsed = JSON.parse(raw)
-    if (!isValidTodos(parsed)) {
-      console.warn('[todos] app-todos 数据格式无效，已回退初始数据')
-      return [...INITIAL_TODOS]
-    }
-
-    return parsed
-  } catch (error) {
-    console.warn('[todos] app-todos 解析失败，已回退初始数据', error)
-    return [...INITIAL_TODOS]
-  }
-}
-
-const saveTodosToStorage = (items) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items))
-}
+const ERROR_MESSAGE = '操作失败，请重试'
 
 export const useTodosStore = defineStore('todos', () => {
-  const todos = ref(loadTodosFromStorage())
+  const todos = ref([])
   const filter = ref('all')
+  const loading = ref(false)
+  const error = ref(null)
+  const initialized = ref(false)
 
   const filteredTodos = computed(() => {
     if (filter.value === 'done') {
@@ -62,43 +21,68 @@ export const useTodosStore = defineStore('todos', () => {
     return todos.value
   })
 
-  const persistTodos = () => {
-    saveTodosToStorage(todos.value)
-  }
+  const fetchTodos = async () => {
+    loading.value = true
+    error.value = null
 
-  const getNextId = () => {
-    if (todos.value.length === 0) {
-      return 1
+    try {
+      todos.value = await todosApi.fetchTodos()
+      initialized.value = true
+    } catch {
+      error.value = ERROR_MESSAGE
+    } finally {
+      loading.value = false
     }
-    return Math.max(...todos.value.map((todo) => todo.id)) + 1
   }
 
-  const addTodo = (title) => {
-    const trimmedTitle = title.trim()
+  const runMutation = async (mutation) => {
+    loading.value = true
+    error.value = null
+
+    try {
+      todos.value = await mutation()
+      return true
+    } catch {
+      error.value = ERROR_MESSAGE
+      return false
+    } finally {
+      loading.value = false
+    }
+  }
+
+  const addTodo = async (title) => {
+    const trimmedTitle = todosApi.validateTodoTitle(title)
     if (!trimmedTitle) {
-      return
+      return false
     }
 
-    todos.value.unshift({
-      id: getNextId(),
-      title: trimmedTitle,
-      done: false,
-    })
-    persistTodos()
+    return runMutation(() => todosApi.createTodo(title))
   }
 
-  const removeTodo = (id) => {
-    todos.value = todos.value.filter((todo) => todo.id !== id)
-    persistTodos()
+  const removeTodo = async (id) => {
+    await runMutation(() => todosApi.deleteTodo(id))
   }
 
-  const completeTodo = (id) => {
+  const toggleTodo = async (id) => {
     const todo = todos.value.find((item) => item.id === id)
-    if (!todo || todo.done) {
+    if (!todo) {
       return
     }
-    todo.done = true
-    persistTodos()
+
+    await runMutation(() => todosApi.updateTodo(id, { done: !todo.done }))
+  }
+
+  const updateTodoTitle = async (id, title) => {
+    const trimmedTitle = todosApi.validateTodoTitle(title)
+    if (!trimmedTitle) {
+      return false
+    }
+
+    return runMutation(() => todosApi.updateTodo(id, { title }))
+  }
+
+  const clearCompletedTodos = async () => {
+    await runMutation(() => todosApi.clearCompletedTodos())
   }
 
   const setFilter = (value) => {
@@ -108,10 +92,16 @@ export const useTodosStore = defineStore('todos', () => {
   return {
     todos,
     filter,
+    loading,
+    error,
+    initialized,
     filteredTodos,
+    fetchTodos,
     addTodo,
     removeTodo,
-    completeTodo,
+    toggleTodo,
+    updateTodoTitle,
+    clearCompletedTodos,
     setFilter,
   }
 })

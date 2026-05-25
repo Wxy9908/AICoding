@@ -606,30 +606,40 @@ Vue 3 + Vite 项目，使用 Composition API、Pinia、Vue Router
 
 ---
 
-## Agent 协作（四角色）
+## Agent 协作（三角色 + 用户）
 
 > 状态单一来源：[`src/AI_coding/STATUS.md`](./src/AI_coding/STATUS.md)  
 > Cursor 规则：[`.cursor/rules/`](./.cursor/rules/)
 
 | 角色 | 规则文件 | 做什么 | 能否写 STATUS |
 |------|----------|--------|:-------------:|
-| **教练** | `coach.mdc` | 带练、给骨架、复盘 | ✅ |
-| **需求拆解** | `requirements-analyst.mdc` | 原始需求 → 类 README 分析 | ❌ |
+| **需求拆解** | `requirements-analyst.mdc` | 分析 + **维护 STATUS** | ✅ |
 | **Prompt 审** | `prompt-reviewer.mdc` | 只点评 Prompt | ❌ |
 | **实现** | `implementer.mdc` | 按定稿 Prompt 写代码 | ❌ |
+| **用户** | — | 定稿 Prompt、验收、复盘 | ✅ |
 
 **标准流水线**：
 
 ```
-原始需求 → [需求拆解] → 你写 prompt → [Prompt审] → 定稿 → [实现] → 验收 → [教练复盘]
+原始需求 → [需求拆解]（更新 STATUS）→ 你写 prompt → [Prompt审] → 定稿 → [实现] → 验收 → 你更新代码现状
 ```
 
-**Phase 3 模拟面试**：用**需求拆解**代替教练 Step 1；限时内不问教练。
+**模拟/限时**：Step 1 用需求拆解 Agent；中途不切换 Agent 角色。
 
 **换 Agent 前**：更新或确认 STATUS → 新对话 `@STATUS.md` + [交接模板](./src/AI_coding/STATUS.md#agent-交接模板复制到新对话)
 
 **prompt_status = 已定稿** 后，实现 Agent 才可改 `src/**`。
 
+### 迁移到其他项目
+
+仓库根目录 [`agent-workflow-template/`](./agent-workflow-template/README.md) 提供：
+
+- 通用 `.cursor/rules/*.mdc`（改 `{{STATUS_FILE}}` / `{{AGENT_ROOT}}` 即可）
+- `docs/agent/` 模板：STATUS、Prompt、REQUIREMENTS、交接话术
+- 安装步骤与练习 1–7 能力地图
+
+本项目专用速查： [`.cursor/rules/README.md`](./.cursor/rules/README.md)
+
 ---
 
-_文档版本：v1.5 · 四 Agent 协作 · 与 [`AI-coding-学习路线.md`](./AI-coding-学习路线.md) 配套使用_
+_文档版本：v1.7 · 三 Agent + 用户 · 与 [`AI-coding-学习路线.md`](./AI-coding-学习路线.md) 配套使用_
